@@ -1,0 +1,8 @@
+Algoritmo de Banker - Deadlock
+
+Compilação:
+    make banker
+
+
+Execução:
+    ./banker (Numero de recursos alocados desejado)

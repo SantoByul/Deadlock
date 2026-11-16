@@ -9,4 +9,4 @@ banker: banker.c
 
 
 clean:
-	rm -f banker
+	rm -f banker result.txt
