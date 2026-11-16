@@ -3,3 +3,19 @@ Script started on 2026-11-09 07:33:39-03:00 [TERM="xterm-256color" TTY="/dev/pts
 [?2004lexit
 
 Script done on 2026-11-09 07:33:53-03:00 [COMMAND_EXIT_CODE="0"]
+Script started on 2026-11-16 09:23:31-03:00 [TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="117" LINES="10"]
+[?2004h]0;danie@SantoByul: ~/Soft/Deadlock[01;32mdanie@SantoByul[00m:[01;34m~/Soft/Deadlock[00m$ make all
+[?2004lgcc -Wall -Wextra -o banker banker.c
+[01m[Kbanker.c:[m[K In function ‘[01m[Kmain[m[K’:
+[01m[Kbanker.c:31:26:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kargv[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+   31 | int main(int argc, [01;35m[Kchar *argv[][m[K){
+      |                    [01;35m[K~~~~~~^~~~~~[m[K
+./banker 10 5 7
+Numero de recursos: 2
+Numero de clientes: 5
+[?2004h]0;danie@SantoByul: ~/Soft/Deadlock[01;32mdanie@SantoByul[00m:[01;34m~/Soft/Deadlock[00m$ make clean
+[?2004lrm -f banker
+[?2004h]0;danie@SantoByul: ~/Soft/Deadlock[01;32mdanie@SantoByul[00m:[01;34m~/Soft/Deadlock[00m$ exit
+[?2004lexit
+
+Script done on 2026-11-16 09:23:49-03:00 [COMMAND_EXIT_CODE="0"]
