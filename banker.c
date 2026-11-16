@@ -3,8 +3,7 @@
 
 int NUMBER_OF_CUSTORMERS, NUMBER_OF_RESOURCES;
 
-int contar()
-{
+int contar(){
     FILE *file;
     int c;
     int last;
@@ -33,6 +32,20 @@ int main(int argc, char *argv[]){
         fprintf(stderr, "Quantidade de recursos incorretas");
         return 1;
     }
+    FILE *file = fopen("customer.txt","r");
+    FILE *file2 = fopen("commands.txt", "r");
+    if (file == NULL){
+        fprintf(stderr, "Ocorreu algum erro relacionado a customer.txt\n");
+        return 1;
+    }
+    if (file2 == NULL){
+        fprintf(stderr, "Ocorreu algum erro relacionado a commands.txt\n");
+        return 1;
+    }
+
+    fclose(file);
+    fclose(file2);
+
     NUMBER_OF_CUSTORMERS = contar();
     NUMBER_OF_RESOURCES = argc - 2;
     printf("Numero de recursos: %d\n", NUMBER_OF_RESOURCES);
