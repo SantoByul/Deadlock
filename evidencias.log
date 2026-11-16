@@ -54,3 +54,30 @@ Script started on 2026-11-16 15:24:02-03:00 [TERM="xterm-256color" TTY="/dev/pts
 [?2004lexit
 
 Script done on 2026-11-16 15:26:08-03:00 [COMMAND_EXIT_CODE="0"]
+Script started on 2026-11-16 17:14:39-03:00 [TERM="xterm-256color" TTY="/dev/pts/5" COLUMNS="117" LINES="10"]
+[?2004h]0;danie@SantoByul: ~/Soft/Deadlock[01;32mdanie@SantoByul[00m:[01;34m~/Soft/Deadlock[00m$ make banker[K[K[K[K[K[Kall
+[?2004lgcc -Wall -Wextra -o banker banker.c
+[01m[Kbanker.c:[m[K In function ‘[01m[Kmain[m[K’:
+[01m[Kbanker.c:98:18:[m[K [01;31m[Kerror: [m[K‘[01m[KNUMBER_OF_CUSTOMERS[m[K’ undeclared (first use in this function); did you mean ‘[01m[KNUMBER_OF_CUSTORMERS[m[K’?
+   98 |     max = malloc([01;31m[KNUMBER_OF_CUSTOMERS[m[K * sizeof(int *));
+      |                  [01;31m[K^~~~~~~~~~~~~~~~~~~[m[K
+      |                  [32m[KNUMBER_OF_CUSTORMERS[m[K
+[01m[Kbanker.c:98:18:[m[K [01;36m[Knote: [m[Keach undeclared identifier is reported only once for each function it appears in
+make: *** [Makefile:8: banker] Error 1
+[?2004h]0;danie@SantoByul: ~/Soft/Deadlock[01;32mdanie@SantoByul[00m:[01;34m~/Soft/Deadlock[00m$ make banker
+[?2004lgcc -Wall -Wextra -o banker banker.c
+[?2004h]0;danie@SantoByul: ~/Soft/Deadlock[01;32mdanie@SantoByul[00m:[01;34m~/Soft/Deadlock[00m$ ./banker 10 5 7
+[?2004lFormato invalido em customer.txt
+[?2004h]0;danie@SantoByul: ~/Soft/Deadlock[01;32mdanie@SantoByul[00m:[01;34m~/Soft/Deadlock[00m$ ./[K[K./banker 10 5 7
+[?2004lFormato invalido em customer.txt
+[?2004h]0;danie@SantoByul: ~/Soft/Deadlock[01;32mdanie@SantoByul[00m:[01;34m~/Soft/Deadlock[00m$ mak[K[K[Kmake clean
+[?2004lrm -f banker result.txt
+[?2004h]0;danie@SantoByul: ~/Soft/Deadlock[01;32mdanie@SantoByul[00m:[01;34m~/Soft/Deadlock[00m$ makeb[K banker
+[?2004lgcc -Wall -Wextra -o banker banker.c
+[?2004h]0;danie@SantoByul: ~/Soft/Deadlock[01;32mdanie@SantoByul[00m:[01;34m~/Soft/Deadlock[00m$ ./banker 10 5 7
+[?2004l[?2004h]0;danie@SantoByul: ~/Soft/Deadlock[01;32mdanie@SantoByul[00m:[01;34m~/Soft/Deadlock[00m$ make clean[K[K[K[K[K[K[K[K[K[Kmake clean[[K
+[?2004lrm -f banker result.txt
+[?2004h]0;danie@SantoByul: ~/Soft/Deadlock[01;32mdanie@SantoByul[00m:[01;34m~/Soft/Deadlock[00m$ exit
+[?2004lexit
+
+Script done on 2026-11-16 17:22:27-03:00 [COMMAND_EXIT_CODE="0"]
