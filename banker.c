@@ -93,6 +93,109 @@ void imprimir(FILE *out, int **max, int **alloc, int **need, int *avail){
     fprintf(out, "\n");
 }
 
+int seguro(int **alloc, int **need, int *avail){
+    int *work;
+    int *finish;
+    int achou, ok, total;
+
+    work = malloc(NUMBER_OF_RESOURCES * sizeof(int));
+    finish = calloc(NUMBER_OF_CUSTORMERS, sizeof(int));
+    for (int i = 0; i < NUMBER_OF_RESOURCES; i++)
+        work[i] = avail[i];
+
+    total = 0;
+    do {
+        achou = 0;
+        for (int i = 0; i < NUMBER_OF_CUSTORMERS; i++){
+            if (finish[i])
+                continue;
+            ok = 1;
+            for (int j = 0; j < NUMBER_OF_RESOURCES; j++){
+                if (need[i][j] > work[j]){
+                    ok = 0;
+                    break;
+                }
+            }
+            if (ok){
+                for (int j = 0; j < NUMBER_OF_RESOURCES; j++)
+                    work[j] += alloc[i][j];
+                finish[i] = 1;
+                total++;
+                achou = 1;
+            }
+        }
+    } while (achou);
+
+    free(work);
+    free(finish);
+    return total == NUMBER_OF_CUSTORMERS;
+}
+
+void requisitar(FILE *out, int client, int *req, int **alloc, int **need, int *avail){
+    for (int i = 0; i < NUMBER_OF_RESOURCES; i++){
+        if (req[i] > need[client][i]){
+            fprintf(out, "The customer %d request ", client);
+            linha(out, req);
+            fprintf(out, " was denied because exceed its maximum allocation\n");
+            return;
+        }
+    }
+
+    for (int i = 0; i < NUMBER_OF_RESOURCES; i++){
+        if (req[i] > avail[i]){
+            fprintf(out, "The resources ");
+            linha(out, avail);
+            fprintf(out, " are not enough to customer %d request ", client);
+            linha(out, req);
+            fprintf(out, "\n");
+            return;
+        }
+    }
+
+    for (int i = 0; i < NUMBER_OF_RESOURCES; i++){
+        avail[i] -= req[i];
+        alloc[client][i] += req[i];
+        need[client][i] -= req[i];
+    }
+
+    if (!seguro(alloc, need, avail)){
+        for (int i = 0; i < NUMBER_OF_RESOURCES; i++){
+            avail[i] += req[i];
+            alloc[client][i] -= req[i];
+            need[client][i] += req[i];
+        }
+        fprintf(out, "The customer %d request ", client);
+        linha(out, req);
+        fprintf(out, " was denied because result in an unsafe state\n");
+        return;
+    }
+
+    fprintf(out, "Allocate to customer %d the resources ", client);
+    linha(out, req);
+    fprintf(out, "\n");
+}
+
+void liberar(FILE *out, int client, int *req, int **alloc, int **need, int *avail){
+    for (int i = 0; i < NUMBER_OF_RESOURCES; i++){
+        if (req[i] > alloc[client][i]){
+            fprintf(out, "The customer %d release ", client);
+            linha(out, req);
+            fprintf(out, " was denied because exceed its allocation\n");
+            return;
+        }
+    }
+
+    for (int i = 0; i < NUMBER_OF_RESOURCES; i++){
+        avail[i] += req[i];
+        alloc[client][i] -= req[i];
+        need[client][i] += req[i];
+    }
+
+    fprintf(out, "Release from customer %d the resources ", client);
+    linha(out, req);
+    fprintf(out, "\n");
+}
+
 int ler_comandos(FILE *out, int **max, int **alloc, int **need, int *avail){
     FILE *file = fopen("commands.txt", "r");
     if (file == NULL){
@@ -153,9 +256,12 @@ int ler_comandos(FILE *out, int **max, int **alloc, int **need, int *avail){
             break;
         }
 
-        fprintf(out, "R%c %d ", tipo, client);
-        linha(out, req);
-        fprintf(out, "\n");
+        if (tipo == 'Q'){
+            requisitar(out, client, req, alloc, need, avail);
+        }
+        else{
+            liberar(out, client, req, alloc, need, avail);
+        }
     }
 
     free(req);
