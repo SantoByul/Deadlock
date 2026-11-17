@@ -81,3 +81,32 @@ make: *** [Makefile:8: banker] Error 1
 [?2004lexit
 
 Script done on 2026-11-16 17:22:27-03:00 [COMMAND_EXIT_CODE="0"]
+Script started on 2026-11-17 08:14:47-03:00 [TERM="xterm-256color" TTY="/dev/pts/5" COLUMNS="117" LINES="10"]
+[?2004h]0;danie@SantoByul: ~/Soft/Deadlock[01;32mdanie@SantoByul[00m:[01;34m~/Soft/Deadlock[00m$ make banker
+[?2004lgcc -Wall -Wextra -o banker banker.c
+[01m[Kbanker.c:[m[K In function ‘[01m[Kmain[m[K’:
+[01m[Kbanker.c:121:11:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function ‘[01m[Kmallock[m[K’; did you mean ‘[01m[Kmalloc[m[K’? [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wimplicit-function-declaration-Wimplicit-function-declaration]8;;[m[K]
+  121 |     max = [01;35m[Kmallock[m[K(NUMBER_OF_CUSTORMERS * sizeof(int *));
+      |           [01;35m[K^~~~~~~[m[K
+      |           [32m[Kmalloc[m[K
+[01m[Kbanker.c:121:9:[m[K [01;35m[Kwarning: [m[Kassignment to ‘[01m[Kint **[m[K’ from ‘[01m[Kint[m[K’ makes pointer from integer without a cast [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wint-conversion-Wint-conversion]8;;[m[K]
+  121 |     max [01;35m[K=[m[K mallock(NUMBER_OF_CUSTORMERS * sizeof(int *));
+      |         [01;35m[K^[m[K
+[01m[Kbanker.c:138:11:[m[K [01;35m[Kwarning: [m[Kassignment to ‘[01m[Kint *[m[K’ from ‘[01m[Kint[m[K’ makes pointer from integer without a cast [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wint-conversion-Wint-conversion]8;;[m[K]
+  138 |     avail [01;35m[K=[m[K mallock(NUMBER_OF_RESOURCES * sizeof(int));
+      |           [01;35m[K^[m[K
+/usr/bin/ld: /tmp/ccaqRP9M.o: in function `main':
+banker.c:(.text+0x608): undefined reference to `mallock'
+/usr/bin/ld: banker.c:(.text+0x6e0): undefined reference to `mallock'
+collect2: error: ld returned 1 exit status
+make: *** [Makefile:8: banker] Error 1
+[?2004h]0;danie@SantoByul: ~/Soft/Deadlock[01;32mdanie@SantoByul[00m:[01;34m~/Soft/Deadlock[00m$ clea[K[K[K[Kmake bn[Kanker
+[?2004lgcc -Wall -Wextra -o banker banker.c
+[?2004h]0;danie@SantoByul: ~/Soft/Deadlock[01;32mdanie@SantoByul[00m:[01;34m~/Soft/Deadlock[00m$ ./banker 10 5 7
+[?2004l[?2004h]0;danie@SantoByul: ~/Soft/Deadlock[01;32mdanie@SantoByul[00m:[01;34m~/Soft/Deadlock[00m$ ba[K[K./banker 3 3 2
+[?2004l[?2004h]0;danie@SantoByul: ~/Soft/Deadlock[01;32mdanie@SantoByul[00m:[01;34m~/Soft/Deadlock[00m$ make clean
+[?2004lrm -f banker result.txt
+[?2004h]0;danie@SantoByul: ~/Soft/Deadlock[01;32mdanie@SantoByul[00m:[01;34m~/Soft/Deadlock[00m$ exit
+[?2004lexit
+
+Script done on 2026-11-17 08:19:45-03:00 [COMMAND_EXIT_CODE="0"]

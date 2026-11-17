@@ -70,9 +70,32 @@ int ler_customer(int **max){
     return ok;
 }
 
+void linha(FILE *out, int *v){
+    for (int i = 0; i < NUMBER_OF_RESOURCES; i++){
+        if (i > 0)
+            fprintf(out, " ");
+        fprintf(out, "%d", v[i]);
+    }
+}
+
+void imprimir(FILE *out, int **max, int **alloc, int **need, int *avail){
+    fprintf(out, "MAXIMUM | ALLOCATION | NEED\n");
+    for (int i = 0; i < NUMBER_OF_CUSTORMERS; i++){
+        linha(out, max[i]);
+        fprintf(out, " | ");
+        linha(out, alloc[i]);
+        fprintf(out, " | ");
+        linha(out, need[i]);
+        fprintf(out, "\n");
+    }
+    fprintf(out, "AVAILABLE ");
+    linha(out, avail);
+    fprintf(out, "\n");
+}
+
 int main(int argc, char *argv[]){
     if (argc < 2){
-        fprintf(stderr, "Quantidade de recursos incorretas");
+        fprintf(stderr, "Quantidade de recursos incorretas\n");
         return 1;
     }
     FILE *file = fopen("customer.txt","r");
@@ -104,20 +127,43 @@ int main(int argc, char *argv[]){
         fprintf(stderr, "Formato invalido em customer.txt\n");
         return 1;
     }
+    
+    int *avail, **alloc, **need;
 
-    FILE *file_res = fopen("result.txt", "w");
-    if (file_res == NULL){
-        fprintf(stderr, "Erro na criação do result.txt");
+    if (NUMBER_OF_CUSTORMERS < 1){
+        fprintf(stderr, "customer.txt esta vazio\n");
         return 1;
     }
 
-    fprintf(file_res,"Numero de recursos: %d\n", NUMBER_OF_RESOURCES);
-    fprintf(file_res,"Numero de clientes: %d\n", NUMBER_OF_CUSTORMERS);
-    fprintf(file_res, "AVAILABLE");
-    for (int i = 1; i < argc; i++)
-        fprintf(file_res, " %s", argv[i]);
-    fprintf(file_res, "\n");
+    avail = malloc(NUMBER_OF_RESOURCES * sizeof(int));
+    for (int i = 0; i < NUMBER_OF_RESOURCES; i++){
+        char *end;
+        avail[i] = strtol(argv[i + 1], &end, 10);
 
+        if (*argv[i + 1] == '\0' || *end != '\0' || avail[i] < 0){
+            fprintf(stderr, "Argumento invalido: %s\n", argv[i + 1]);
+            return 1;
+        }
+    }
+
+    alloc = malloc(NUMBER_OF_CUSTORMERS * sizeof(int *));
+    need = malloc(NUMBER_OF_CUSTORMERS * sizeof(int *));
+    for (int i = 0; i < NUMBER_OF_CUSTORMERS; i++){
+        alloc[i] = calloc(NUMBER_OF_CUSTORMERS, sizeof(int));
+        need[i] = malloc(NUMBER_OF_CUSTORMERS* sizeof(int));
+
+        for (int j = 0; j < NUMBER_OF_RESOURCES; j++){
+            need[i][j] = max[i][j] - alloc[i][j];
+        }
+    }
+
+    FILE *file_res = fopen("result.txt", "w");
+    if (file_res == NULL){
+        fprintf(stderr, "Erro na criação do result.txt\n");
+        return 1;
+    }
+
+    imprimir(file_res, max, alloc, need, avail);
 
     fclose(file_res);
 
