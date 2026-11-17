@@ -300,7 +300,7 @@ int main(int argc, char *argv[]){
     }
 
     if (!ler_customer(max)){
-        fprintf(stderr, "Formato invalido em customer.txt\n");
+        fprintf(stderr, "Formato invalido em customer.txt (confira se o numero de colunas e igual ao numero de recursos informados)\n");
         return 1;
     }
     
@@ -325,8 +325,8 @@ int main(int argc, char *argv[]){
     alloc = malloc(NUMBER_OF_CUSTORMERS * sizeof(int *));
     need = malloc(NUMBER_OF_CUSTORMERS * sizeof(int *));
     for (int i = 0; i < NUMBER_OF_CUSTORMERS; i++){
-        alloc[i] = calloc(NUMBER_OF_CUSTORMERS, sizeof(int));
-        need[i] = malloc(NUMBER_OF_CUSTORMERS* sizeof(int));
+        alloc[i] = calloc(NUMBER_OF_RESOURCES, sizeof(int));
+        need[i] = malloc(NUMBER_OF_RESOURCES* sizeof(int));
 
         for (int j = 0; j < NUMBER_OF_RESOURCES; j++){
             need[i][j] = max[i][j] - alloc[i][j];

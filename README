@@ -1,8 +1,52 @@
-Algoritmo de Banker - Deadlock
+# Algoritmo do Banqueiro
 
-Compilação:
-    make banker
+## Compilar
 
+```
+make
+```
 
-Execução:
-    ./banker (Numero de recursos alocados desejado)
+## Rodar
+
+Crie os dois arquivos na mesma pasta do programa.
+
+`customer.txt` (um cliente por linha, valores separados por vírgula):
+
+```
+7,5,3
+3,2,2
+9,0,2
+2,2,2
+4,3,3
+```
+
+`commands.txt` (`RQ` pede, `RL` libera, `*` mostra o estado):
+
+```
+RQ 0 0 2 1
+RQ 2 3 0 2
+RL 0 0 1 1
+*
+```
+
+Execute passando o total de instâncias de cada recurso (aqui, 3 recursos):
+
+```
+./banker 10 5 7
+```
+
+O resultado fica em `result.txt`:
+
+```
+cat result.txt
+```
+
+## Limpar
+
+```
+make clean
+```
+
+## Erros
+
+Se um argumento ou arquivo estiver errado (arquivo ausente, formato inválido, número de colunas diferente do número de argumentos), o programa mostra uma mensagem de erro e encerra.
