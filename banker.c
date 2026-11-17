@@ -93,6 +93,76 @@ void imprimir(FILE *out, int **max, int **alloc, int **need, int *avail){
     fprintf(out, "\n");
 }
 
+int ler_comandos(FILE *out, int **max, int **alloc, int **need, int *avail){
+    FILE *file = fopen("commands.txt", "r");
+    if (file == NULL){
+        return 0;
+    }
+
+    char line[256], *p, *end, tipo;
+    int *req = malloc(NUMBER_OF_RESOURCES * sizeof(int));
+    int client, ok = 1;
+
+    while (ok && fgets(line, sizeof(line), file) != NULL){
+        p = line;
+        while (*p == ' ' || *p == '\t')
+            p++;
+        if (*p == '\n' || *p == '\r' || *p == '\0')
+            continue;
+
+        if (*p == '*'){
+            p++;
+            while (*p == ' ' || *p == '\t' || *p == '\r' || *p == '\n')
+                p++;
+            if (*p != '\0')
+                ok = 0;
+            else
+                imprimir(out, max, alloc, need, avail);
+            continue;
+        }
+
+        if (p[0] != 'R' || (p[1] != 'Q' && p[1] != 'L') || p[2] != ' '){
+            ok = 0;
+            break;
+        }
+        tipo = p[1];
+        p += 3;
+
+        client = strtol(p, &end, 10);
+        if (end == p || client < 0 || client >= NUMBER_OF_CUSTORMERS){
+            ok = 0;
+            break;
+        }
+        p = end;
+
+        for (int i = 0; i < NUMBER_OF_RESOURCES; i++){
+            req[i] = strtol(p, &end, 10);
+            if (end == p || req[i] < 0){
+                ok = 0;
+                break;
+            }
+            p = end;
+        }
+        if (!ok)
+            break;
+
+        while (*p == ' ' || *p == '\t' || *p == '\r' || *p == '\n')
+            p++;
+        if (*p != '\0'){
+            ok = 0;
+            break;
+        }
+
+        fprintf(out, "R%c %d ", tipo, client);
+        linha(out, req);
+        fprintf(out, "\n");
+    }
+
+    free(req);
+    fclose(file);
+    return ok;
+}
+
 int main(int argc, char *argv[]){
     if (argc < 2){
         fprintf(stderr, "Quantidade de recursos incorretas\n");
@@ -163,7 +233,11 @@ int main(int argc, char *argv[]){
         return 1;
     }
 
-    imprimir(file_res, max, alloc, need, avail);
+    if (!ler_comandos(file_res, max, alloc, need, avail)){
+        fprintf(stderr, "Formato invalido em commands.txt\n");
+        fclose(file_res);
+        return 1;
+    }
 
     fclose(file_res);
 
